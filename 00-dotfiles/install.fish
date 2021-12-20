@@ -1,16 +1,20 @@
 #!/usr/bin/env fish
+# Setup editor
 set -Ux EDITOR vim
 set -Ux VISUAL $EDITOR
-set -Ux WEDITOR code
 
+# Default for dotfiles and projects
 set -Ux DOTFILES ~/.dotfiles
-set -Ux PROJECTS ~/Developer
+set -Ux PROJECTS ~/Projects
 
-set -Ua fish_user_paths $DOTFILES/bin $HOME/.bin
+# Expose bins
+fish_add_path -g $DOTFILES/bin $HOME/.bin
 
+# Include all functions one level deep
 for f in $DOTFILES/*/functions
 	set -Up fish_function_path $f
 end
+
 
 for f in $DOTFILES/*/conf.d/*.fish
 	ln -sf $f ~/.config/fish/conf.d/(basename $f)

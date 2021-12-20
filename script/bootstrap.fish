@@ -94,15 +94,17 @@ function install_dotfiles
 
 	link_file $DOTFILES_ROOT/fisher/plugins $__fish_config_dir/fish_plugins backup
 		or abort plugins
-	link_file $DOTFILES_ROOT/bat/config $HOME/.config/bat/config backup
-		or abort bat
 	link_file $DOTFILES_ROOT/htop/htoprc $HOME/.config/htop/htoprc backup
 		or abort htoprc
-	link_file $DOTFILES_ROOT/ssh/config.dotfiles $HOME/.ssh/config.dotfiles backup
-		or abort ssh
-	link_file $DOTFILES_ROOT/kitty/kitty.conf $HOME/.config/kitty/kitty.conf backup
-		or abort kitty
 end
+
+if not type -q brew
+	exec '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+end
+
+brew bundle --file $DOTFILES_ROOT/Brewfile
+	and success 'brew install'
+	or abort 'brew install'
 
 curl -sL git.io/fisher | source && fisher install jorgebucaran/fisher
 	and success 'fisher'
@@ -127,7 +129,7 @@ mkdir -p ~/.config/fish/completions/
 for installer in */install.fish
 	$installer
 		and success $installer
-		or abort $installer
+		# or abort $installer
 end
 
 if ! grep (command -v fish) /etc/shells
