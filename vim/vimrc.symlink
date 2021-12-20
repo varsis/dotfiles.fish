@@ -1,10 +1,11 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 :set shellcmdflag=-ic
-" set shell=/bin/zsh
+set shell='/usr/local/bin/fish'
+let &shell='/usr/local/bin/fish'
 
 " set the runtime path to include Vundle and initialize
-call plug#begin('~/.vim/plugged') 
+call plug#begin('~/.vim/plugged')
 
 " Autocomplete & other features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
