@@ -1,23 +1,12 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+:set shellcmdflag=-ic
+" set shell=/bin/zsh
 
 " set the runtime path to include Vundle and initialize
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/plugged') 
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-
-" if executable('typescript-language-server')
-"     au User lsp_setup call lsp#register_server({
-"         \ 'name': 'typescript-language-server',
-"         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-"         \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-"         \ 'whitelist': ['typescript'],
-"         \ })
-" endif
-"
+" Autocomplete & other features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Coc Plugins, usually installed using CocInstall
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
@@ -30,100 +19,126 @@ Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-sql', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 
-Plug 'puremourning/vimspector', {'dir': '~/.vim/pack', 'do': './install_gadget.py --all --disable-tcl'}
+" CocPlugins
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'yuki-yano/fzf-preview.vim', {'do': 'yarn install --frozen-lockfile'}
 
-" Plug 'Valloric/YouCompleteMe'
-" let g:ycm_show_diagnostics_ui=0
-" let g:ycm_add_preview_to_completeopt=1
-" let g:ycm_autoclose_preview_window_after_insertion=1
-" let g:ycm_autoclose_preview_window_after_completion=0
-set completeopt=noselect,menuone,preview
+" VIM Debugger
+Plug 'puremourning/vimspector', {'dir': '~/.vim/pack', 'do': './install_gadget.py --all --disable-tcl --force-enable-node'}
+let g:vimspector_enable_mappings = 'HUMAN'
 
+" Run Tests inside of VIM
 Plug 'janko/vim-test'
 
-" Table Of Contents MARKDOWN
-Plug 'mzlogin/vim-markdown-toc'
+" Table Of Contents MARKDOWN - Generator
+Plug 'mzlogin/vim-markdown-toc' 
+
 " Terraform
 Plug 'hashivim/vim-terraform'
-" Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
+
+" Async dispatch of commands
+" Mostly testing / buildign
 Plug 'tpope/vim-dispatch'
+
+" Automatically surround strings, etc
+Plug 'tpope/vim-surround'
+
+" quickly navigate cucumber tests
+Plug 'tpope/vim-cucumber'
+
+" Comment / Uncomment things quickly
+Plug 'tpope/vim-commentary'
+
+" Runtime for Halm, Sass and Scss
+Plug 'tpope/vim-haml'
+
+" Quick key mappings for naviation
+Plug 'tpope/vim-unimpaired'
+
+" Git commands in vim
+Plug 'tpope/vim-fugitive'
+
+Plug 'tpope/vim-rhubarb'
 
 " Autocomplete quotes, brackets, ect..
 Plug 'HerringtonDarkholme/yats.vim'
+
+" JSX Highlighting
 Plug 'peitalin/vim-jsx-typescript'
+
+" Show gitconfligts
 Plug 'rhysd/conflict-marker.vim'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-cucumber'
+
+" formatting of tables in markdown or cucumber
 Plug 'godlygeek/tabular'
+
+" Display markdown in the browser
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
 " Python
 " Plug 'plytophogy/vim-virtualenv'
 " Plug 'PieterjanMontens/vim-pipenv'
 
-" We have Yats Above...
-" Plug 'leafgarland/typescript-vim'
-"
 Plug 'ervandew/supertab'
+
+" Code snippets
 Plug 'SirVer/ultisnips'
+
+" React snippets
 Plug 'epilande/vim-react-snippets'
+
+" Jest snippets
 Plug 'joaohkfaria/vim-jest-snippets'
+
+" Snippets for everything 
 Plug 'honza/vim-snippets'
+
+" Angular 2 snippets
 Plug 'mhartington/vim-angular2-snippets'
 
-" OLD VIM TYPESCRIPT PLUGIN
-" Plug 'Quramy/tsuquyomi'
-" let g:tsuquyomi_single_quote_import=1
-" let g:tsuquyomi_shortest_import_path=1
-
-Plug 'tpope/vim-commentary'
-
-Plug 'maksimr/vim-jsbeautify'
-
+" SCSS and CSS plugins
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'tpope/vim-haml'
 
-Plug 'pangloss/vim-javascript'
-
+" Javascript Syntax highlighting
 Plug 'jelera/vim-javascript-syntax'
 
+" Show indentation in vim
 Plug 'nathanaelkane/vim-indent-guides'
 
+" Autocomplete closing brackets
 Plug 'Raimondi/delimitMate'
 
 " JS Doc
 Plug 'heavenshell/vim-jsdoc'
 
+" Config for different languages (spaces vs tabs etc)
 Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-unimpaired'
-
-"" Plug 'scrooloose/syntastic'
-Plug 'w0rp/ale'
-" Plug 'gcorne/vim-sass-lint'
-"let g:syntastic_sass_checkers=["sasslint"]
-"let g:syntastic_scss_checkers=["sasslint"]
-" let g:tsuquyomi_completion_preview=0
-" let g:tsuquyomi_disable_quickfix=1
-"let g:syntastic_typescript_checkers=["tsuquyomi", "tslint"]
-"let g:syntastic_javascript_checkers=["eslint"]
-"let g:syntastic_enable_signs=0
-
-let g:ale_linters = {
-\   'typescript': ['tsserver', 'tslint'],
-\   'javascript': ['eslint'],
-\}
-
-let g:ale_fixers = {
-\   'typescript': ['prettier', 'remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint', 'prettier'],
-\   'css': ['prettier'],
-\   'scss': ['prettier'],
-\}
 
 " File Browser
 Plug 'scrooloose/nerdtree'
+
+" Send commands to TMUX and back
+Plug 'christoomey/vim-tmux-navigator'
+
+" Fuzzy Search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'lifepillar/vim-solarized8'
+
+call plug#end()
+
+" === NERDTree 
 " Open Nerd Tree when no file selected
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
@@ -131,134 +146,67 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 map <C-n> :NERDTreeToggle<CR>
 nmap <Leader>m :NERDTreeToggle<CR>
 
-" Project Loader
-" Plug 'ternjs/tern_for_vim'
-Plug 'christoomey/vim-tmux-navigator'
-
-" Fuzzy Search
-"Plug 'ctrlpvim/ctrlp.vim'
-"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-set rtp+=/usr/local/opt/fzf
-set rtp+=~/.fzf
-Plug 'junegunn/fzf.vim'
-
-
-" Grep / ack
-Plug 'mileszs/ack.vim'
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+" === Ripgrep
+" Set default grep command to Ripgrep
+if executable("rg") 
+    set grepprg=rg\ --vimgrep 
 endif
 
-Plug 'itchyny/lightline.vim'
-Plug 'Chiel92/vim-autoformat'
+" === FZF Plugin options
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Rg call fzf#vim#grep('rg --no-require-git --column --line-number --no-heading --fixed-strings --smart-case --hidden --follow  --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* Rggfile call fzf#vim#grep('rg -l --no-require-git --no-heading --smart-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* Rgfile call fzf#vim#grep('rg -l --no-require-git --no-heading --smart-case --no-ignore --hidden --follow --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
-Plug 'tpope/vim-fugitive'
-call plug#end()
+set completeopt=menu,preview,longest
 
 " This does what it says on the tin. It will check your file on open too, not just on save.
 " You might not want this, so just leave it out if you don't.
-set statusline+=%#warningmsg#
-set statusline+=%{ALEGetStatusLine()}
-let g:airline#extensions#ale#enabled = 0
-set statusline+=%*
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
 
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m\
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
+
+" === UtilSnips
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-" " Refactor Code Typescript
-" autocmd FileType typescript nmap <buffer> <Leader>e :LspRename<CR>
-" autocmd FileType typescript nmap <buffer> <Leader>E :LspRename<CR>
-" autocmd FileType typescript nmap <buffer> <Leader>a :LspCodeAction<CR>
-" " Show Tip
-" autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
-
+" === Instant Markdown
+" Globnal settings
 let g:instant_markdown_slow = 1
 
 " Allow moving on columns tmux
 set ttymouse=sgr
 set shellcmdflag=-lc
-
-" Disable Column, speed up navigation
-" let g:syntastic_cursor_column = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-"
-" ALE
-let g:ale_sign_warning = '▲'
-let g:ale_sign_error = '✗'
-let g:ale_lint_delay = 1000
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 1
-let g:ale_fix_on_save = 0
-let g:ale_completion_enabled = 0
-highlight link ALEWarningSign String
-highlight link ALEErrorSign Title
-highlight ALEWarning ctermbg=48
-
-let g:ycm_show_diagnostics_ui = 0
-
-" Lightline
-let g:lightline = {
-\ 'colorscheme': 'wombat',
-\ 'active': {
-\   'left': [['mode', 'paste'], ['filename', 'modified']],
-\   'right': [['lineinfo'], ['percent'], [ 'cocstatus', 'readonly', 'filename', 'modified' ], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
-\ },
-\ 'component_expand': {
-\   'linter_warnings': 'LightlineLinterWarnings',
-\   'linter_errors': 'LightlineLinterErrors',
-\   'linter_ok': 'LightlineLinterOK'
-\ },
-\ 'component_function': {
-\   'cocstatus': 'coc#status'
-\ },
-\ 'component_type': {
-\   'readonly': 'error',
-\   'linter_warnings': 'warning',
-\   'linter_errors': 'error'
-\ },
-\ }
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
-endfunction
-
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
-endfunction
-
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓ ' : ''
-endfunction
-
-" autocmd User ALELint call s:MaybeUpdateLightline()
-
-" Update and show lightline but only if it's visible (e.g., not in Goyo)
-function! s:MaybeUpdateLightline()
-  if exists('#lightline')
-    call lightline#update()
-  end
-endfunction
-
-" enable keyboard shortcuts
-let g:tern_map_keys=1
-"show argument hints
-let g:tern_show_argument_hints='on_hold'
 
 " The following are examples of different formats supported.
 " Keep Plug commands between vundle#begin/end.
@@ -277,14 +225,14 @@ set colorcolumn=80
 set mouse=a
 set autoread
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
+" Maintainer: 
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version:
+" Version: 
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post:
+" Blog_post: 
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -297,7 +245,7 @@ set autoread
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version:
+" Raw_version: 
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
@@ -344,12 +292,13 @@ command!      -bang -nargs=? SSymbol call CocList('symbols', '--input', <q-args>
 " Quick Search!
 nmap ; :Buffers<CR>
 nmap <Leader>f :GFiles<CR>
+nmap <Leader>d :Rg<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>s :SSymbol<CR>
 
 let g:javascript_plugin_jsdoc = 1
+
 filetype plugin on
-" set omnifunc=syntaxcomplete#Complete
 autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType scss,sass set iskeyword+=-
@@ -390,24 +339,24 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases
+" When searching try to be smart about cases 
 set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch
+set incsearch 
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw
+set lazyredraw 
 set ttyfast
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch
+set showmatch 
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -422,11 +371,15 @@ set tm=500
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable
+syntax enable 
 
-colorscheme basic-dark
 set background=dark
-set t_Co=256
+autocmd vimenter * ++nested colorscheme solarized8
+
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" set t_Co=256
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -513,7 +466,7 @@ map <leader>ba :1,1000 bd!<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+map <leader>tm :tabmove 
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -522,7 +475,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers
+" Specify the behavior when switching between buffers 
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -569,31 +522,19 @@ inoremap º <Esc>:m .-2<CR>==gi
 
 vnoremap ª :m '>+1<CR>gv=gv
 vnoremap º :m '<-2<CR>gv=gv
-"nmap <M-j> mz:m+<cr>`z
-"nmap <M-k> mz:m-2<cr>`z
-"vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-"vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-"if has("mac") || has("macunix")
-"  nmap <D-j> <M-j>
-"  nmap <D-k> <M-k>
-"  vmap <D-j> <M-j>
-"  vmap <D-k> <M-k>
-"endif
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-" func! DeleteTrailingWS()
-"   exe "normal mz"
-"   %s/\s\+$//ge
-"   exe "normal `z"
-" endfunc
-" autocmd BufWrite *.py :call DeleteTrailingWS()
-" autocmd BufWrite *.js :call DeleteTrailingWS()
-" autocmd BufWrite *.ts :call DeleteTrailingWS()
-" autocmd BufWrite *.coffee :call DeleteTrailingWS()
-" autocmd FileType yaml,javascript,typescript,html execute  ':silent! %s#^\t\+#\=repeat(" ", len(submatch(0))*' . &ts . ')'
 autocmd FileType c,cpp,java,php,typescript,typescript.tsx,javascript,python,yaml,yml autocmd BufWritePre <buffer> %s/\s\+$//e
-autocmd FileType typescript.tsx,typescript,javascript autocmd BufWritePre <buffer> Prettier
 autocmd FileType javascript set formatprg=prettier\ --stdin
 autocmd FileType typescript,typescript.tsx set formatprg=prettier-tslint\ --stdin
 
@@ -662,7 +603,7 @@ function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
-endfunction
+endfunction 
 
 function! VisualSelection(direction) range
     let l:saved_reg = @"
@@ -696,7 +637,7 @@ endfunction
 
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 
-let g:coc_node_path='/usr/local/bin/node'
+let g:coc_node_path='/Users/chris/.nvm/versions/node/v12.22.0/bin/node'
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
@@ -718,55 +659,6 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
-
-          map <C-F> :call JsBeautify()<cr>
-          " or
-          autocmd FileType javascript noremap <buffer>  <C-F> :call JsBeautify()<cr>
-          " for html
-          autocmd FileType html noremap <buffer> <C-F> :call HtmlBeautify()<cr>
-          " for css or scss
-          autocmd FileType css noremap <buffer> <C-F> :call CSSBeautify()<cr>
-          nnoremap <C-J> <C-W><C-J>
-        nnoremap <C-K> <C-W><C-K>
-        nnoremap <C-L> <C-W><C-L>
-        nnoremap <C-H> <C-W><C-H>
-
-" ALE Errors
-nmap <silent> <leader>aj :ALENext<cr>
-nmap <silent> <leader>ak :ALEPrevious<cr>
-
-function! FormatProject()
-  if &filetype == "typescript"
-    execute "Ack --ts '.'"
-  elseif &filetype == "javascript"
-    execute "Ack --js '.'"
-  else
-    throw()
-  endif
-  execute "cfdo Prettier"
-  execute "wall"
-  execute "qall"
-endfunction
-
-
-if !exists("g:ycm_semantic_triggers")
-  let g:ycm_semantic_triggers =  {
-              \   'c' : ['->', '.'],
-              \   'objc' : ['->', '.'],
-              \   'ocaml' : ['.', '#'],
-              \   'cpp,objcpp' : ['->', '.', '::'],
-              \   'perl' : ['->'],
-              \   'php' : ['->', '::', '"', "'", 'use ', 'namespace ', '\'],
-              \   'typescript' : [],
-              \   'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-              \   'html': ['<', '"', '</', ' '],
-              \   'vim' : ['re![_a-za-z]+[_\w]*\.'],
-              \   'ruby' : ['.', '::'],
-              \   'lua' : ['.', ':'],
-              \   'erlang' : [':'],
-              \   'haskell' : ['.', 're!.']
-              \ }
-endif
 
 " COC VIM
 " " Use tab for trigger completion with characters ahead and navigate.
@@ -801,8 +693,7 @@ inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
+" Remap keys for gotos nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -880,3 +771,36 @@ function SqlFormatter()
 endfunction
 
 filetype plugin on
+
+" Jump to tags
+" https://github.com/junegunn/fzf/wiki/Examples-(vim)#jump-to-tags
+function! s:tags_sink(line)
+  let parts = split(a:line, '\t\zs')
+  let excmd = matchstr(parts[2:], '^.*\ze;"\t')
+  execute 'silent e' parts[1][:-2]
+  let [magic, &magic] = [&magic, 0]
+  execute excmd
+  let &magic = magic
+endfunction
+
+function! s:tags()
+  if empty(tagfiles())
+    echohl WarningMsg
+    echom 'Preparing tags'
+    echohl None
+    call system('git ls-files | ctags --links=no --languages=c,c++,javascript,java,python,typescript -L-')
+  endif
+
+  call fzf#run({
+  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+  \            '| grep -v -a ^!',
+  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index',
+  \ 'down':    '40%',
+  \ 'sink':    function('s:tags_sink')})
+endfunction
+
+command! Tags call s:tags()
+nmap <Leader>t :Tags<CR>
+
+" Increase redraw time for large files
+set redrawtime=10000
