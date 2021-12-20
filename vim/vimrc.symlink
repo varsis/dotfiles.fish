@@ -637,7 +637,7 @@ endfunction
 
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 
-let g:coc_node_path='/Users/chris/.nvm/versions/node/v12.22.0/bin/node'
+let g:coc_node_path = substitute(system('which node'), '\n', '', '')
 
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
