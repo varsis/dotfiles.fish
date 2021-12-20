@@ -8,7 +8,7 @@ set -Ux DOTFILES ~/.dotfiles
 set -Ux PROJECTS ~/Projects
 
 # Expose bins
-fish_add_path -g $DOTFILES/bin $HOME/.bin
+fish_add_path -U $DOTFILES/bin $HOME/.bin
 
 # Include all functions one level deep
 for f in $DOTFILES/*/functions

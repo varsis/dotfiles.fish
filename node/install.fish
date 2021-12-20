@@ -1,2 +1,2 @@
 #!/usr/bin/env fish
-fish_add_path -g /usr/local/opt/node@16/bin
+fish_add_path -U /usr/local/opt/node@16/bin

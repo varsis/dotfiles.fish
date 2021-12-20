@@ -34,7 +34,6 @@ set -g history-limit 10000
 #
 set -g mode-keys vi
 set -g mouse on
-setw -g mode-mouse on
 set -g monitor-activity on
 #
 bind-key v split-window -h

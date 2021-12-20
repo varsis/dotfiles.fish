@@ -9,16 +9,6 @@ call plug#begin('~/.vim/plugged')
 
 " Autocomplete & other features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Coc Plugins, usually installed using CocInstall
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-jedi', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-sql', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 
 " CocPlugins
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
@@ -40,7 +30,7 @@ let g:vimspector_enable_mappings = 'HUMAN'
 Plug 'janko/vim-test'
 
 " Table Of Contents MARKDOWN - Generator
-Plug 'mzlogin/vim-markdown-toc' 
+Plug 'mzlogin/vim-markdown-toc'
 
 " Terraform
 Plug 'hashivim/vim-terraform'
@@ -100,7 +90,7 @@ Plug 'epilande/vim-react-snippets'
 " Jest snippets
 Plug 'joaohkfaria/vim-jest-snippets'
 
-" Snippets for everything 
+" Snippets for everything
 Plug 'honza/vim-snippets'
 
 " Angular 2 snippets
@@ -139,7 +129,7 @@ Plug 'lifepillar/vim-solarized8'
 
 call plug#end()
 
-" === NERDTree 
+" === NERDTree
 " Open Nerd Tree when no file selected
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
@@ -149,8 +139,8 @@ nmap <Leader>m :NERDTreeToggle<CR>
 
 " === Ripgrep
 " Set default grep command to Ripgrep
-if executable("rg") 
-    set grepprg=rg\ --vimgrep 
+if executable("rg")
+    set grepprg=rg\ --vimgrep
 endif
 
 " === FZF Plugin options
@@ -164,7 +154,9 @@ endif
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
 command! -bang -nargs=* Rg call fzf#vim#grep('rg --no-require-git --column --line-number --no-heading --fixed-strings --smart-case --hidden --follow  --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+
 command! -bang -nargs=* Rggfile call fzf#vim#grep('rg -l --no-require-git --no-heading --smart-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+
 command! -bang -nargs=* Rgfile call fzf#vim#grep('rg -l --no-require-git --no-heading --smart-case --no-ignore --hidden --follow --color "always" '.shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 
 set completeopt=menu,preview,longest
@@ -193,7 +185,7 @@ set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
-set statusline+=\ 
+set statusline+=\
 
 " === UtilSnips
 " better key bindings for UltiSnipsExpandTrigger
@@ -226,14 +218,14 @@ set colorcolumn=80
 set mouse=a
 set autoread
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+" Maintainer:
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version: 
+" Version:
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post: 
+" Blog_post:
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -246,7 +238,7 @@ set autoread
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version: 
+" Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
@@ -340,24 +332,24 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 set ttyfast
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -372,7 +364,7 @@ set tm=500
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
+syntax enable
 
 set background=dark
 autocmd vimenter * ++nested colorscheme solarized8
@@ -467,7 +459,7 @@ map <leader>ba :1,1000 bd!<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
+map <leader>tm :tabmove
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -476,7 +468,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -508,12 +500,14 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+nnoremap <M-j> :m .+1<CR>==
+nnoremap <M-k> :m .-2<CR>==
+inoremap <M-j> <Esc>:m .+1<CR>==gi
+inoremap <M-k> <Esc>:m .-2<CR>==gi
+vnoremap <M-j> :m '>+1<CR>gv=gv
+vnoremap <M-k> :m '<-2<CR>gv=gv
 
 nnoremap ª :m .+1<CR>==
 nnoremap º :m .-2<CR>==
@@ -604,7 +598,7 @@ function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
-endfunction 
+endfunction
 
 function! VisualSelection(direction) range
     let l:saved_reg = @"
