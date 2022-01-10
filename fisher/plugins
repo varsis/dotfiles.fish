@@ -4,3 +4,5 @@ oh-my-fish/plugin-grc
 dracula/fish
 jorgebucaran/replay.fish
 jorgebucaran/fisher
+jorgebucaran/nvm.fish
+aliz-ai/google-cloud-sdk-fish-completion
