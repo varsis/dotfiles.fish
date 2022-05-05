@@ -31,3 +31,5 @@ brew 'starship'
 
 cask 'alacritty'
 cask 'google-cloud-sdk'
+
+brew derailed/k9s/k9s
