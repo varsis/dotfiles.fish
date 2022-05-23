@@ -1,2 +1,5 @@
 *~
 dist
+Brewfile.lock.json
+vim/vim.symlink/pack
+vim/vim.symlink/.netrwhist
