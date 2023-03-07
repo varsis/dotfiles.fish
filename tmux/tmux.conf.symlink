@@ -1,4 +1,4 @@
-set-option -g default-shell /usr/local/bin/fish
+set-option -g default-shell /opt/homebrew/bin/fish
 
 # Copy-paste integration
 set -g default-command "reattach-to-user-namespace -l fish"

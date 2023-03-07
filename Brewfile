@@ -2,7 +2,7 @@ cask_args appdir: '/Applications'
 
 tap 'homebrew/bundle'
 tap 'puma/puma'
-tap 'caskroom/cask'
+tap 'homebrew/cask'
 
 brew 'coreutils'
 brew 'fzf'
@@ -21,6 +21,10 @@ brew 'reattach-to-user-namespace'
 brew 'kubectl'
 brew 'kubernetes-helm'
 brew 'starship'
+brew 'node'
+brew 'jq'
+brew 'asdf'
+brew 'bufbuild/buf/buf'
 
 brew 'fish'
 brew 'git-delta'
@@ -28,8 +32,8 @@ brew 'gh'
 brew 'grc'
 brew 'kubectx'
 brew 'starship'
+brew 'hashicorp/tap/terraform-ls'
 
 cask 'alacritty'
 cask 'google-cloud-sdk'
 
-brew derailed/k9s/k9s

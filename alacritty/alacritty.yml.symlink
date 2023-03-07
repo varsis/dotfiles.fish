@@ -12,7 +12,6 @@ window:
   dimensions:
    columns: 120
    lines: 40
-
 scrolling:
   history: 10000
   multiplier: 3
@@ -172,6 +171,7 @@ key_bindings:
   - { key: Down,     mods: Command,       chars: "\x06\x4a" }
   - { key: Up,       mods: Command,       chars: "\x06\x4b" }
   - { key: Right,    mods: Command,       chars: "\x06\x4c" }
+  - { key: Space,    mods: Control,       chars: "\x00" }
   - {
       key: Comma,
       mods: Command,

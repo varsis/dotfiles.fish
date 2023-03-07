@@ -44,9 +44,9 @@
 [commit]
 	gpgsign = false
 [merge]
-	tool = vscode
+	tool = fugitive
 [mergetool "fugitive"]
-	cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
+	cmd = vim -f -c \"Gdiffsplit!\" \"$MERGED\"
 [dotfiles]
 	managed = true
 [credential]
@@ -59,3 +59,5 @@
 	syntax-theme = Dracula
 	line-numbers = true
 	decorations = true
+[pull]
+	rebase = true
