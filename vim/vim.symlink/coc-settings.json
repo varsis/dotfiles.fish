@@ -1,4 +1,7 @@
 {
+  "diagnostic.enable": false,
+  "tsserver.disableAutomaticTypeAcquisition": true,
+  "tsserver.workspaceSymbols.scope": "currentProject",
   "languageserver": {
     "terraform": {
       "command": "terraform-lsp",

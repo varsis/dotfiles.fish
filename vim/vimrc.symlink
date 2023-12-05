@@ -10,6 +10,9 @@ call plug#begin('~/.vim/plugged')
 " Autocomplete & other features
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Copilot
+Plug 'github/copilot.vim'
+
 " CocPlugins
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile --ignore-engines'}
 Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile --ignore-engines'}
@@ -64,7 +67,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
 " Autocomplete quotes, brackets, ect..
-Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'HerringtonDarkholme/yats.vim'
 
 " JSX Highlighting
 Plug 'peitalin/vim-jsx-typescript'
@@ -76,7 +79,7 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'godlygeek/tabular'
 
 " Display markdown in the browser
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
 
 " Python
 " Plug 'plytophogy/vim-virtualenv'
@@ -132,16 +135,47 @@ Plug 'lifepillar/vim-solarized8'
 
 " Vim Wiki
 Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vimwiki-sync'
+
+" Calendar
+Plug 'mattn/calendar-vim'
 
 call plug#end()
 
+
 " === Vimwiki
+let g:vimwiki_key_mappings = {
+            \ 'all_maps': 1,
+            \ 'global': 1,
+            \ 'headers': 1,
+            \ 'text_objs': 1,
+            \ 'table_format': 1,
+            \ 'table_mappings': 0,
+            \ 'lists': 1,
+            \ 'links': 1,
+            \ 'html': 1,
+            \ 'mouse': 0,
+            \ }
+augroup VimwikiRemaps
+    autocmd!
+    " unmap tab in insert mode
+    autocmd Filetype vimwiki silent! iunmap <buffer> <Tab>
+    " remap table tab mappings to M-n M-p
+    autocmd Filetype vimwiki inoremap <silent><expr><buffer> <M-n> vimwiki#tbl#kbd_tab()
+    autocmd Filetype vimwiki inoremap <silent><expr><buffer> <M-p> vimwiki#tbl#kbd_shift_tab()
+    " on enter if completion is open, complete first element otherwise use
+    " default vimwiki mapping
+    autocmd Filetype vimwiki inoremap <silent><expr><buffer> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "<C-]><Esc>:VimwikiReturn 1 5<CR>"
+augroup END
+
 command! Diary VimwikiDiaryIndex
 augroup vimwikigroup
     autocmd!
     " automatically update links on read diary
     autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
-augroup end
+    autocmd FileType wiki UltiSnipsAddFiletypes vimwiki
+augroup END
 
 " === Rust
 let g:rustfmt_autosave = 1
@@ -150,9 +184,12 @@ let g:rustfmt_fail_silently = 0
 
 " === NERDTree
 " Open Nerd Tree when no file selected
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup NERDTree
+  autocmd!
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup end
 map <C-n> :NERDTreeToggle<CR>
 nmap <Leader>m :NERDTreeToggle<CR>
 
@@ -230,13 +267,24 @@ set statusline+=\
 
 " === UtilSnips
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " === Instant Markdown
 " Globnal settings
-let g:instant_markdown_slow = 1
+"let g:instant_markdown_slow = 1
+"let g:instant_markdown_autostart = 0
+"let g:instant_markdown_open_to_the_world = 1
+"let g:instant_markdown_allow_unsafe_content = 1
+"let g:instant_markdown_allow_external_content = 0
+"let g:instant_markdown_mathjax = 1
+let g:instant_markdown_mermaid = 1
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+"let g:instant_markdown_autoscroll = 0
+"let g:instant_markdown_port = 8888
+"let g:instant_markdown_python = 1
+let g:instant_markdown_theme = 'dark'
 
 " Allow moving on columns tmux
 set ttymouse=sgr
@@ -333,9 +381,12 @@ nmap <Leader>s :SSymbol<CR>
 let g:javascript_plugin_jsdoc = 1
 
 filetype plugin on
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType scss,sass set iskeyword+=-
+augroup javascript
+  autocmd!
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType scss,sass set iskeyword+=-
+augroup END
 
 " JSDOC
 let g:jsdoc_enable_es6 = 1
@@ -408,7 +459,11 @@ set tm=500
 syntax enable
 
 set background=dark
-autocmd vimenter * ++nested colorscheme solarized8
+augroup scheme
+  autocmd!
+  autocmd vimenter * ++nested colorscheme solarized8
+augroup END
+
 
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -517,10 +572,13 @@ catch
 endtry
 
 " Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
+augroup lastedit
+  autocmd!
+  autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+augroup END
 " Remember info about open buffers on close
 set viminfo^=%
 
@@ -570,9 +628,10 @@ map 0 ^
 "   vmap <D-k> <M-k>
 " endif
 
-autocmd FileType c,cpp,java,php,typescript,typescript.tsx,javascript,python,yaml,yml autocmd BufWritePre <buffer> %s/\s\+$//e
-autocmd FileType javascript set formatprg=prettier\ --stdin
-autocmd FileType typescript,typescript.tsx set formatprg=prettier-tslint\ --stdin
+augroup emptyspace
+  autocmd FileType c,cpp,java,php,typescript,typescript.tsx,javascript,python,yaml,yml autocmd BufWritePre <buffer> %s/\s\+$//e
+augroup END
+command BufOnly silent! execute "%bd|e#|bd#"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vimgrep searching and cope displaying
@@ -617,6 +676,12 @@ map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
+
+augroup wiki
+  autocmd!
+  autocmd FileType markdown setlocal spell
+  autocmd FileType vimwiki setlocal spell
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
@@ -671,8 +736,6 @@ function! HasPaste()
     return ''
 endfunction
 
-command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-
 let g:coc_node_path = substitute(system('which node'), '\n', '', '')
 
 " Don't close window, when deleting a buffer
@@ -725,8 +788,7 @@ inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -749,9 +811,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -761,11 +820,15 @@ nmap f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
+  " Highlight symbol under cursor on CursorHold
+  autocmd CursorHold * silent call CocActionAsync('highlight')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+  autocmd VimLeavePre * :call coc#rpc#kill()
+  autocmd VimLeave * if get(g:, 'coc_process_pid', 0) | call system('kill -9 -'.g:coc_process_pid) | endif
+augroup END
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 vmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -800,10 +863,14 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+
 let g:instant_markdown_autostart = 0
 
-autocmd FileType sql call SqlFormatter()
-augroup end
+augroup sql
+  autocmd!
+  autocmd FileType sql call SqlFormatter()
+augroup END
+
 function SqlFormatter()
     set noai
     " set mappings...
